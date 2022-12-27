@@ -20,27 +20,26 @@ enum class error_kind : int {
     no_window_context = GLFW_NO_WINDOW_CONTEXT,
 };
 
-class error {
+class Error {
     public:
-    // clear's last error
-    error() {
+    // clear's last Error
+    Error() {
         const char *des{nullptr};
         kind = error_kind(glfwGetError(&des));
         msg = des;
     }
 
-    // will throw everytime error occurs
-    static GLFWerrorfun fail_on_error() {
-        return [](int code, const char *des) {
-            throw error{error_kind(code), des};
-        };
-    };
+    Error(error_kind e_kind, const char *des) : kind(e_kind), msg(des) {}
+
+    // will throw everytime Error occurs
 
     private:
     error_kind kind{error_kind::no_error};
     std::string msg{};
+};
 
-    error(error_kind e_kind, const char *des) : kind(e_kind), msg(des) {}
+static GLFWerrorfun FAIL_ON_ERROR = [](int code, const char *des) {
+    throw Error{error_kind(code), des};
 };
 
 } // namespace glfw

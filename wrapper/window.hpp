@@ -4,10 +4,10 @@
 
 namespace glfw {
 
-class window {
+class Window {
     public:
-    window(GLFWwindow *safe_handle) : handle(safe_handle) {}
-    ~window() {
+    Window(GLFWwindow *safe_handle) : handle(safe_handle) {}
+    ~Window() {
         glfwDestroyWindow(handle);
     }
 
