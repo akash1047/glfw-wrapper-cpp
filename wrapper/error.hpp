@@ -6,7 +6,7 @@
 
 namespace glfw {
 
-enum class error_kind : int {
+enum class error_kind {
     no_error = GLFW_NO_ERROR,
     not_initialized = GLFW_NOT_INITIALIZED,
     no_current_context = GLFW_NO_CURRENT_CONTEXT,
@@ -20,26 +20,30 @@ enum class error_kind : int {
     no_window_context = GLFW_NO_WINDOW_CONTEXT,
 };
 
-class Error {
+class Error : public std::exception {
     public:
-    // clear's last Error
+    // Get recent error from glfw error stack.
+    //
+    // Clear's last error from the error stack in the process.
     Error() {
-        const char *des{nullptr};
-        kind = error_kind(glfwGetError(&des));
-        msg = des;
+        const char *desc{nullptr};
+        kind = error_kind(glfwGetError(&desc));
+        msg = desc;
     }
 
-    Error(error_kind e_kind, const char *des) : kind(e_kind), msg(des) {}
+    Error(error_kind e_kind, const char *desc) : kind(e_kind), msg(desc) {}
 
-    // will throw everytime Error occurs
+    const char *what() const noexcept override {
+        return msg.c_str();
+    }
 
     private:
     error_kind kind{error_kind::no_error};
     std::string msg{};
 };
 
-static GLFWerrorfun FAIL_ON_ERROR = [](int code, const char *des) {
-    throw Error{error_kind(code), des};
+static GLFWerrorfun FAIL_ON_ERROR = [](int code, const char *desc) {
+    throw Error{error_kind(code), desc};
 };
 
 } // namespace glfw
