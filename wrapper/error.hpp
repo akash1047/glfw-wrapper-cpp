@@ -3,8 +3,9 @@
 #include <GLFW/glfw3.h>
 #include <functional>
 #include <string>
+#include <tuple>
 
-namespace glfw {
+namespace wrap {
 
 enum class error_kind {
     no_error = GLFW_NO_ERROR,
@@ -31,10 +32,32 @@ class Error : public std::exception {
         msg = desc;
     }
 
+    // construct Error from error_kind and c_str
     Error(error_kind e_kind, const char *desc) : kind(e_kind), msg(desc) {}
 
     const char *what() const noexcept override {
         return msg.c_str();
+    }
+
+    // get inner error_kind and msg
+    std::tuple<error_kind, std::string> get() {
+        return {kind, msg};
+    }
+
+    bool operator==(error_kind e) {
+        return kind == e;
+    }
+
+    bool operator!=(error_kind e) {
+        return kind != e;
+    }
+
+    error_kind get_error_kind() {
+        return kind;
+    }
+
+    std::string get_msg() {
+        return msg;
     }
 
     private:
@@ -46,4 +69,4 @@ static GLFWerrorfun FAIL_ON_ERROR = [](int code, const char *desc) {
     throw Error{error_kind(code), desc};
 };
 
-} // namespace glfw
+} // namespace wrap

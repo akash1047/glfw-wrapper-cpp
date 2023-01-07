@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <functional>
 
-namespace glfw {
+namespace wrap {
 
 class hint {
     public:
@@ -71,4 +71,4 @@ OPT_HINT(scale_to_monitor, GLFW_SCALE_TO_MONITOR)
 
 #undef OPT_HINT
 
-} // namespace glfw
+} // namespace wrap

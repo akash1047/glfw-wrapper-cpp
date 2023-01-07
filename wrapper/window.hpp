@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace glfw {
+namespace wrap {
 
 class Window {
     public:
@@ -15,4 +15,4 @@ class Window {
     GLFWwindow *handle{nullptr};
 };
 
-} // namespace glfw
+} // namespace wrap

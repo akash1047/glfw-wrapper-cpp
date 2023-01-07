@@ -5,7 +5,7 @@
 #include "window.hpp"
 #include <GLFW/glfw3.h>
 
-namespace glfw {
+namespace wrap {
 
 class Glfw {
     public:
@@ -49,4 +49,4 @@ class Glfw {
     }
 };
 
-} // namespace glfw
+} // namespace wrap
