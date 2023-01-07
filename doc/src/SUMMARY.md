@@ -1,3 +1,4 @@
 # Summary
 
-- [error](./error.md)
+- [Error](./error.md)
+  - [error kind](./error_kind.md)
