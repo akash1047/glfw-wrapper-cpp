@@ -1,7 +1,7 @@
 #pragma once
 
 #include "error.hpp"
-#include "glfw/window.hpp"
+#include "window.hpp"
 #include <GLFW/glfw3.h>
 #include <exception>
 
