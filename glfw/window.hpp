@@ -130,6 +130,10 @@ public:
         glfwSetWindowShouldClose(this->id, value);
     }
 
+    inline void make_context() {
+        glfwMakeContextCurrent(this->id);
+    }
+
 private:
     GLFWwindow *id{nullptr};
 };
